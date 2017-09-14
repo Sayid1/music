@@ -54,3 +54,15 @@ class MusicIsayidSpiderMiddleware(object):
 
     def spider_opened(self, spider):
         spider.logger.info('Spider opened: %s' % spider.name)
+
+import random
+from music_isayid.settings import USER_AGENTS
+
+class UserAgentMiddleware(object):
+
+    def process_request(self, request, spider):
+        request.headers['User-Agent'] = random.choice(USER_AGENTS)
+
+    def process_response(self, request, response, spider):
+        print('%s UA = %s' % (request.url, request.headers['User-Agent']))
+        return response
