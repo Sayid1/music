@@ -24,10 +24,10 @@ class SheetPipeline(object):
         self.mongo_db = mongo_db
 
     @classmethod
-    def from_crawler(cls, crwaler):
+    def from_crawler(cls, crawler):
         return cls(
-            mongo_host = crwaler.setting.get('MONGO_HOST'),
-            mongo_db = crawler.setting.get('MONGO_DB')
+            mongo_host = crawler.settings.get('MONGO_HOST'),
+            mongo_db = crawler.settings.get('MONGO_DB')
         )
 
     def open_spider(self, spider):

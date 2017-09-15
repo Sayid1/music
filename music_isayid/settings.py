@@ -37,7 +37,7 @@ USER_AGENTS = [
 #USER_AGENT = 'music_isayid (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -45,7 +45,7 @@ ROBOTSTXT_OBEY = True
 # Configure a delay for requests for the same website (default: 0)
 # See http://scrapy.readthedocs.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-#DOWNLOAD_DELAY = 3
+DOWNLOAD_DELAY = 3
 # The download delay setting will honor only one of:
 #CONCURRENT_REQUESTS_PER_DOMAIN = 16
 #CONCURRENT_REQUESTS_PER_IP = 16
@@ -83,9 +83,9 @@ DOWNLOADER_MIDDLEWARES = {
 
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'music_isayid.pipelines.MusicIsayidPipeline': 300,
-#}
+ITEM_PIPELINES = {
+    'music_isayid.pipelines.SheetPipeline': 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html
@@ -112,8 +112,19 @@ MONGO_HOST = '127.0.0.1'
 MONGO_DB = 'music163'
 
 #爬取的歌单的播放数需大于等于100000
+#用户是在歌单里面获取的  所以没有爬取全部用户
 SHEET_MIN_PLAYER = 100000
 
-#歌单url前缀
-HOST = 'https://music.163.com'
-SHEET_PREFIX = '%s%s'% (HOST, '/playlist?id=')
+HOST = 'https://music.163.com/'
+
+#歌单地址uri
+SHEET_URI = 'playlist?id='
+
+#用户地址uri
+USER_URI = 'user/home?id='
+
+#歌单地址前缀
+SHEET_PREFIX = '%s%s' % (HOST, SHEET_URI)
+
+#用户地址前缀
+USER_PREFIX = '%s%s' % (HOST, USER_URI)
