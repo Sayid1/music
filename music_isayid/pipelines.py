@@ -7,10 +7,7 @@
 
 import pymongo
 
-class SheetPipeline(object):
-    """
-        歌单流水线
-    """
+class MusicPipeline(object):
 
     def __init__(self, mongo_host, mongo_db):
         """

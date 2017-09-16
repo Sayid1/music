@@ -20,12 +20,47 @@ class SheetItem(scrapy.Item):
     player_count = scrapy.Field()#播放数
     collect_count = scrapy.Field()#收藏数
     share_count = scrapy.Field()#分享数
-    comments_count = scrapy.Field()#评论数
+    comment_count = scrapy.Field()#评论数
     labels = scrapy.Field()#标签
     introduction = scrapy.Field()#介绍
 
 
-class User(scrapy.Item):
+class MusicItem(scrapy.Item):
+    """
+        歌曲实体
+    """
+    id = scrapy.Field()#网易云音乐ID
+    name = scrapy.Field()#网易云音乐名称
+    musician_ids = scrapy.Field()#网易云音乐音乐人ID(s)
+    duration = scrapy.Field()#网易云音乐播放时长 (毫秒)
+    album_id = scrapy.Field()#网易云音乐专辑ID
+
+
+
+class AlbumItem(scrapy.Item):
+    """
+        专辑实体
+    """
+    id = scrapy.Field()#专辑ID
+    name = scrapy.Field()#专辑名称
+    profile_url = scrapy.Field()#专辑图片
+    musician_id = scrapy.Field()#专辑音乐人ID
+    release_time = scrapy.Field()#发行时间
+    release_company = scrapy.Field()#发行公司
+    share_count = scrapy.Field()#分享数
+    comment_count = scrapy.Field()#评论数
+    introduction = scrapy.Field()#专辑介绍
+
+
+class MusicianItem(scrapy.Item):
+    """
+        音乐人实体
+    """
+    id = scrapy.Field()#网易云音乐人ID
+    name = scrapy.Field()#音乐人名称
+
+
+class UserItem(scrapy.Item):
     """
         用户实体
     """

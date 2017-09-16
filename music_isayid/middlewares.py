@@ -7,7 +7,6 @@
 
 from scrapy import signals
 
-
 class MusicIsayidSpiderMiddleware(object):
     # Not all methods need to be defined. If a method is not defined,
     # scrapy acts as if the spider middleware does not modify the
@@ -62,7 +61,3 @@ class UserAgentMiddleware(object):
 
     def process_request(self, request, spider):
         request.headers['User-Agent'] = random.choice(USER_AGENTS)
-
-    def process_response(self, request, response, spider):
-        print('%s UA = %s' % (request.url, request.headers['User-Agent']))
-        return response

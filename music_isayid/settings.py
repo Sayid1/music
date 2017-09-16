@@ -83,9 +83,9 @@ DOWNLOADER_MIDDLEWARES = {
 
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
-ITEM_PIPELINES = {
-    'music_isayid.pipelines.SheetPipeline': 300,
-}
+#ITEM_PIPELINES = {
+#    'music_isayid.pipelines.MusicPipeline': 300,
+#}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html
@@ -128,3 +128,10 @@ SHEET_PREFIX = '%s%s' % (HOST, SHEET_URI)
 
 #用户地址前缀
 USER_PREFIX = '%s%s' % (HOST, USER_URI)
+
+#在Item Processor（也称为Item Pipeline）中并行处理的最大并发项数（每个响应）。
+#CONCURRENT_ITEMS = 100
+
+
+#Scrapy下载器将执行的并发（即同时）请求的最大数量。
+#CONCURRENT_REQUESTS = 16
