@@ -4,6 +4,7 @@ from twisted.internet import reactor
 from scrapy.crawler import CrawlerProcess
 from scrapy.settings import Settings
 import logging
+import os
 from spiders.yuzhong import YuzhongSpider
 
 LOG_FILENAME = "log.log"
@@ -14,14 +15,17 @@ TO_CRAWL = [YuzhongSpider]
 RUNNING_CRAWLERS = []
 
 def spider_closing(spider):
-    """Activates on spider closed signal"""
     logging.msg("Spider closed: %s" % spider, level=logging.INFO)
     RUNNING_CRAWLERS.remove(spider)
     if not RUNNING_CRAWLERS:
         reactor.stop()
 
 
-logging.basicConfig(filename=LOG_FILENAME, level=logging.INFO)
+logging.basicConfig(format='%(asctime)s:%(filename)s[line:%(lineno)d] % [levelname]s %(message)s', 
+                    datefmt='%s, %d %b %Y %H:%M:%S',
+                    filemode='w', 
+                    filename=os.path.join(os.getcwd(), LOG_FILENAME),
+                    level=logging.INFO)
 for spider in TO_CRAWL:
     settings = Settings()
     settings.set("FEED_FORMAT", 'csv')
