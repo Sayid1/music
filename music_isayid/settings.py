@@ -71,8 +71,9 @@ DOWNLOAD_DELAY = 3
 # Enable or disable downloader middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
+    'music_isayid.middlewares.DupeUrlMiddleware': 400,
     'scrapy.contrib.downloadermiddleware.useragent.UserAgentMiddleware': None,
-    'music_isayid.middlewares.UserAgentMiddleware': 400,
+    'music_isayid.middlewares.UserAgentMiddleware': 401,
 }
 
 # Enable or disable extensions
@@ -125,11 +126,17 @@ SHEET_URI = 'playlist?id='
 #用户地址uri
 USER_URI = 'user/home?id='
 
+#歌曲地址uri
+MUSIC_URI = 'song?id='
+
 #歌单地址前缀
 SHEET_PREFIX = '%s%s' % (HOST, SHEET_URI)
 
 #用户地址前缀
 USER_PREFIX = '%s%s' % (HOST, USER_URI)
+
+#歌曲地址前缀
+MUSIC_PREFIX = '%s%s' % (HOST, MUSIC_URI)
 
 #在Item Processor（也称为Item Pipeline）中并行处理的最大并发项数（每个响应）。
 #CONCURRENT_ITEMS = 100

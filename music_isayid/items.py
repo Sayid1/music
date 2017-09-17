@@ -34,6 +34,7 @@ class MusicItem(scrapy.Item):
     musician_ids = scrapy.Field()#网易云音乐音乐人ID(s)
     duration = scrapy.Field()#网易云音乐播放时长 (毫秒)
     album_id = scrapy.Field()#网易云音乐专辑ID
+    alias = scrapy.Field()#歌曲别名
 
 
 
@@ -58,6 +59,7 @@ class MusicianItem(scrapy.Item):
     """
     id = scrapy.Field()#网易云音乐人ID
     name = scrapy.Field()#音乐人名称
+    alias = scrapy.Field()#音乐人别名
 
 
 class UserItem(scrapy.Item):
@@ -68,14 +70,14 @@ class UserItem(scrapy.Item):
     name = scrapy.Field()#用户名
     profile_url = scrapy.Field()#个人头像
     level = scrapy.Field()#等级
-    moment = scrapy.Field()#动态数
-    follow = scrapy.Field()#关注数
-    fans = scrapy.Field()#粉丝数
+    moment_count = scrapy.Field()#动态数
+    follow_count = scrapy.Field()#关注数
+    fans_count = scrapy.Field()#粉丝数
     introduction = scrapy.Field()#介绍 非必须
     address = scrapy.Field()#地址
     age = scrapy.Field()#年龄 非必须
     sex = scrapy.Field()#性别 非必须 0男 1女 2未知
-    labels = scrapy.Field()#个人标签 非必须
-    type = scrapy.Field()#用户类型 1普通用户 2达人  3 V认证用户
-    created_sheet_id = scrapy.Field()#用户创建的歌单ID
-    collecting_sheet_id = scrapy.Field()#用户收藏的歌单ID
+    #labels = scrapy.Field()#个人标签 非必须
+    #type = scrapy.Field()#用户类型 1普通用户 2达人  3 V认证用户
+    #created_sheet_id = scrapy.Field()#用户创建的歌单ID
+    #collecting_sheet_id = scrapy.Field()#用户收藏的歌单ID
