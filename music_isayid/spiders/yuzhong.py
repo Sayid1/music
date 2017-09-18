@@ -5,7 +5,7 @@ import logging
 import scrapy
 from redisconn import setMusic
 from encrypt import getData
-from items import SheetItem, MusicItem, MusicianItem, UserItem
+from items import SheetItem, MusicItem, MusicianItem, LyricItem, UserItem, CommentsItem
 
 class YuzhongSpider(scrapy.Spider):
     """
@@ -85,10 +85,11 @@ class YuzhongSpider(scrapy.Spider):
 
                     yield musicItem
                 #一首歌可能存在于多个歌单中，但它们的ID是一样的，中间件会自动过滤 所以这里不需要redis去重 （评论和歌曲挂钩  不和歌单挂钩）
-                yield scrapy.Request(url='%s%s' % (self.settings.get('MUSIC_PREFIX'), music_id), callback=self.parseMusic)
+                data = '{rid:"", offset:"0", total:"true", limit:"20", csrf_token:""}'
+                yield scrapy.FormRequest(url=self.settings.get('COMMENT_URL') % music_id, formdata=getData(data) callback=self.parseComment, meta={'music_id': music_id})
                 #爬取歌词
                 data = '{id: %s, lv: 0, tv: 0}' % music_id
-                yield scrapy.FormRequest(url=self.settings.get('LYRIC_URL'), formdata=getData(data) callback=self.parseLyric)
+                yield scrapy.FormRequest(url=self.settings.get('LYRIC_URL'), formdata=getData(data) callback=self.parseLyric, meta={'music_id': music_id})
         #----------------歌曲end-----------------
 
         #----------------歌单信息----------------
@@ -132,24 +133,45 @@ class YuzhongSpider(scrapy.Spider):
         #爬取用户信息
         yield scrapy.Request(url=response.urljoin(user_url), callback=self.parseUser, meta={'id': user_id})
 
-    def parseMusic(self, response):
-        """
-            解析歌曲
-        """
-        pass
-
     def parseLyric(self, response):
         """
             解析歌词
         """
-        jsonresponse = json.loads(response.body_as_unicode())
-        
+        music_id = response.meta['music_id']
+        result = json.loads(response.body_as_unicode())
+        #中文
+        zh_lyric = result['lrc']['lyric']
+        #英文
+        en_lyric = result['tlyric']['lyric']
+
+        lyricItem = LyricItem()
+        lyricItem['music_id'] = music_id
+        lyricItem['zh_lyric'] = zh_lyric
+        lyricItem['en_lyric'] = en_lyric
+        yield lyricItem
 
     def parseComment(self, response):
         """
             解析评论
         """
-        pass
+        music_id = response.meta['music_id']
+        result = json.loads(response.body_as_unicode())
+        comments_sum = json_dict['total']
+        comments = json_dict['comments']
+        hotComments = json_dict.get('hotComments')
+        topComments = json_dict.get('topComments')
+
+        commentsItem = CommentsItem()
+        commentsItem['music_id'] = music_id
+        commentsItem['comments'] = comments 
+        commentsItem['hot_comments'] = hotComments
+        commentsItem['top_comments'] = topComments
+        yield commentsItem
+
+        for offset in range(0, comments_sum, 20):
+            data = '{rid:"", offset:"%s", total:"true", limit:"20", csrf_token:""}' % offset
+            yield scrapy.FormRequest(url=self.settings.get('COMMENT_URL') % music_id, formdata=getData(data) callback=self.parseComment)
+                
 
     def parseUser(self, response):
         """

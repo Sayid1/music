@@ -143,6 +143,9 @@ MUSIC_PREFIX = '%s%s' % (HOST, MUSIC_URI)
 #歌词地址url
 LYRIC_URL = 'https://music.163.com/weapi/song/lyric'
 
+#评论地址url
+COMMENT_URL = 'http://music.163.com/weapi/v1/resource/comments/R_SO_4_%s/?csrf_token='
+
 #在Item Processor（也称为Item Pipeline）中并行处理的最大并发项数（每个响应）。
 #CONCURRENT_ITEMS = 100
 

@@ -70,6 +70,9 @@ MUSIC_PREFIX = '%s%s' % (HOST, MUSIC_URI)
 #歌词地址url
 LYRIC_URL = 'https://music.163.com/weapi/song/lyric'
 
+#评论地址url
+COMMENT_URL = 'http://music.163.com/weapi/v1/resource/comments/R_SO_4_%s/?csrf_token='
+
 
 for spider in TO_CRAWL:
 
@@ -99,7 +102,8 @@ for spider in TO_CRAWL:
         'SHEET_PREFIX': SHEET_PREFIX,
         'USER_PREFIX': USER_PREFIX,
         'MUSIC_PREFIX': MUSIC_PREFIX,
-        'LYRIC_URL': LYRIC_URL
+        'LYRIC_URL': LYRIC_URL,
+        'COMMENT_URL': COMMENT_URL
     })
 
 

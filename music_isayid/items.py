@@ -42,7 +42,15 @@ class LyricItem(scrapy.Item):
         歌曲歌词
     """
     music_id = scrapy.Field()
-    content = scrapy.Field()#歌词内容
+    zh_lyric = scrapy.Field()#中文歌词
+    en_lyric = scrapy.Field()#英文歌词
+
+
+class CommentsItem(scrapy.Item):
+    music_id = scrapy.Field()
+    comments = scrapy.Field()#普通评论
+    hot_comments = scrapy.Field()#精彩评论
+    top_comments = scrapy.Field()#置顶评论
 
 
 class AlbumItem(scrapy.Item):
