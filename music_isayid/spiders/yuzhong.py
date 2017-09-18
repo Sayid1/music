@@ -4,6 +4,7 @@ import json
 import logging
 import scrapy
 from redisconn import setMusic
+from encrypt import getData
 from items import SheetItem, MusicItem, MusicianItem, UserItem
 
 class YuzhongSpider(scrapy.Spider):
@@ -85,6 +86,9 @@ class YuzhongSpider(scrapy.Spider):
                     yield musicItem
                 #一首歌可能存在于多个歌单中，但它们的ID是一样的，中间件会自动过滤 所以这里不需要redis去重 （评论和歌曲挂钩  不和歌单挂钩）
                 yield scrapy.Request(url='%s%s' % (self.settings.get('MUSIC_PREFIX'), music_id), callback=self.parseMusic)
+                #爬取歌词
+                data = '{id: %s, lv: 0, tv: 0}' % music_id
+                yield scrapy.FormRequest(url=self.settings.get('LYRIC_URL'), formdata=getData(data) callback=self.parseLyric)
         #----------------歌曲end-----------------
 
         #----------------歌单信息----------------
@@ -129,6 +133,22 @@ class YuzhongSpider(scrapy.Spider):
         yield scrapy.Request(url=response.urljoin(user_url), callback=self.parseUser, meta={'id': user_id})
 
     def parseMusic(self, response):
+        """
+            解析歌曲
+        """
+        pass
+
+    def parseLyric(self, response):
+        """
+            解析歌词
+        """
+        jsonresponse = json.loads(response.body_as_unicode())
+        
+
+    def parseComment(self, response):
+        """
+            解析评论
+        """
         pass
 
     def parseUser(self, response):

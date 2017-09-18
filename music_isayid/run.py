@@ -57,6 +57,7 @@ USER_URI = 'user/home?id='
 # 歌曲地址uri
 MUSIC_URI = 'song?id='
 
+
 # 歌单地址前缀
 SHEET_PREFIX = '%s%s' % (HOST, SHEET_URI)
 
@@ -65,6 +66,10 @@ USER_PREFIX = '%s%s' % (HOST, USER_URI)
 
 # 歌曲地址前缀
 MUSIC_PREFIX = '%s%s' % (HOST, MUSIC_URI)
+
+#歌词地址url
+LYRIC_URL = 'https://music.163.com/weapi/song/lyric'
+
 
 for spider in TO_CRAWL:
 
@@ -94,6 +99,7 @@ for spider in TO_CRAWL:
         'SHEET_PREFIX': SHEET_PREFIX,
         'USER_PREFIX': USER_PREFIX,
         'MUSIC_PREFIX': MUSIC_PREFIX,
+        'LYRIC_URL': LYRIC_URL
     })
 
 

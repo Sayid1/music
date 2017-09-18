@@ -37,6 +37,13 @@ class MusicItem(scrapy.Item):
     alias = scrapy.Field()#歌曲别名
 
 
+class LyricItem(scrapy.Item):
+    """
+        歌曲歌词
+    """
+    music_id = scrapy.Field()
+    content = scrapy.Field()#歌词内容
+
 
 class AlbumItem(scrapy.Item):
     """
